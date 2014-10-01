@@ -1,0 +1,25 @@
+%h3.text-center
+  Admin Work Logs -
+  = link_to "Back", :back
+%hr
+- @users.each do |user|
+  .panel-group{id: "accordian-#{user.id}"}
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title.text-center
+          %a{"data-parent" => "#accordian-#{user.id}", "data-toggle" => "collapse", :href => "#collapse-#{user.id}"}
+            - if current_user.first_name == user.first_name && current_user.last_name == user.last_name
+              = "Your Work Logs"
+            - else
+              = "#{user.first_name} #{user.last_name} Work Logs"
+      .panel-collapse.collapse.out{id: "collapse-#{user.id}"}
+        .panel-body.text-center
+          - if current_work_week = user.current_work_week
+            %h3.underline Current Work
+            = render(partial: 'shared/work_week', locals: {work_week: current_work_week})
+          - if passed_work_weeks = user.passed_work_weeks
+            %h3.underline Passed Work
+            - passed_work_weeks.each do |passed|
+              = render(partial: 'shared/work_week', locals: {work_week: passed})
+          - elsif
+            %h3 This user has no work history

@@ -1,0 +1,29 @@
+.text-center
+  %h3
+    = "Welcome - #{current_user.first_name} #{current_user.last_name}"
+    \-
+    = link_to 'Logout', destroy_user_session_path, {method: :delete}
+  - if admin?
+    = link_to 'View All Work Logs', '/work_logs', {class: 'btn btn-default margin-bottom'}
+  - if !@current_work_week
+    %form{method: 'POST', action: "/start_work_week"}
+      = hidden_field_tag :authenticity_token, form_authenticity_token
+      %button.btn.btn-warning{type: 'submit'} Start Work Week
+%hr
+- if current_user.work_weeks.empty?
+  .text-center
+    %h3.text-center You have no work history. Click above to start your week.
+- elsif @current_work_week
+  %h3.text-center.underline
+    Current Work Week
+  .text-center
+    %form{method: 'POST', action: "/end_work_week"}
+      = hidden_field_tag :authenticity_token, form_authenticity_token
+      %button.btn.btn-warning.margin-bottom{type: 'submit'} End Work Week
+  = render(partial: 'shared/work_week', locals: {work_week: @current_work_week, expanded: true, current_week: true})
+- unless @passed_work_weeks.empty?
+  %h3.text-center.underline
+    = pluralize(@passed_work_weeks.count, 'Passed Work Week', 'Passed Work Weeks')
+  #passed_work_weeks
+    - @passed_work_weeks.each do |passed_work_week|
+      = render(partial: 'shared/work_week', locals: {work_week: passed_work_week})

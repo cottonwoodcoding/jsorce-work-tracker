@@ -1,0 +1,34 @@
+.text-center
+  .panel-group{id: "accoridan-#{work_week.id}"}
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#accoridan-#{work_week.id}", "data-toggle" => "collapse", :href => "##{work_week.id}"}
+            = "Started - #{work_week.date_started.strftime('%m/%d/%y')}"
+            - if work_week.date_ended
+              \-
+              = "Ended - #{work_week.date_ended.strftime('%m/%d/%y')}"
+      .panel-collapse.collapse{id: work_week.id, class: defined?(expanded) ? 'in' : 'out'}
+        .panel-body
+          - if defined?(current_week)
+            = link_to 'Add Work', "/add_work", {class: 'btn btn-success', role: 'button'}
+            %hr
+          - work_week.work_logs.sort_by{|wl| wl.date}.to_enum.with_index(1).each do |work_log, index|
+            %h3
+              = "Work Entry - #{index}"
+            .well
+              %h5.underline Date of work:
+              %p
+                = work_log.date.strftime('%m/%d/%y')
+              %h5.underline Tenant Name:
+              %p
+                = work_log.tenant_name
+              %h5.underline Tenant Address:
+              %p
+                = work_log.address
+              %h5.underline Work Description:
+              %p
+                = work_log.work_description
+              %h5.underline Money Spent:
+              %p
+                = work_log.money_spent

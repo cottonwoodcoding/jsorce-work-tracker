@@ -9,6 +9,6 @@ class User < ActiveRecord::Base
 
   def passed_work_weeks
     passed_work_weeks = self.work_weeks.where(active: false)
-    passed_work_weeks.empty? ? nil : passed_work_weeks
+    passed_work_weeks.empty? ? [] : passed_work_weeks
   end
 end

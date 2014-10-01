@@ -3,7 +3,6 @@ class HomeController < ApplicationController
 
   def index
     @current_work_week = current_user.current_work_week
-    @passed_work_weeks = current_user.passed_work_weeks
-    @passed_work_weeks.sort_by{|passed| passed.date_ended} if @passed_work_weeks
+    @passed_work_weeks = current_user.passed_work_weeks || []
   end
 end

@@ -1,8 +1,9 @@
 class HomeController < ApplicationController
-  before_action :authenticate_user!
 
   def index
-    @current_work_week = current_user.current_work_week
-    @passed_work_weeks = current_user.passed_work_weeks
+    if @current_work_period = current_user.current_work_period
+      @work_period_jobs = @current_work_period.jobs
+    end
+    @passed_work_periods_count = current_user.passed_work_periods.count
   end
 end

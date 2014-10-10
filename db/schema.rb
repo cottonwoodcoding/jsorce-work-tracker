@@ -11,7 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001191334) do
+ActiveRecord::Schema.define(version: 20141003223500) do
+
+  create_table "addresses", force: true do |t|
+    t.string   "value"
+    t.integer  "job_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "appointments", force: true do |t|
+    t.integer  "user_id"
+    t.string   "name"
+    t.string   "number"
+    t.string   "address"
+    t.text     "notes"
+    t.string   "status"
+    t.string   "status_notes"
+    t.date     "scheduled"
+    t.date     "completed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "jobs", force: true do |t|
+    t.string   "name"
+    t.integer  "work_period_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -36,17 +64,17 @@ ActiveRecord::Schema.define(version: 20141001191334) do
 
   create_table "work_logs", force: true do |t|
     t.date     "date"
-    t.string   "address"
     t.text     "work_description"
-    t.string   "hours_worked"
-    t.string   "tenant_name"
+    t.string   "total_hours_worked"
+    t.string   "time_started"
+    t.string   "time_ended"
     t.string   "money_spent"
-    t.integer  "work_week_id"
+    t.integer  "address_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "work_weeks", force: true do |t|
+  create_table "work_periods", force: true do |t|
     t.date     "date_started"
     t.date     "date_ended"
     t.boolean  "active"

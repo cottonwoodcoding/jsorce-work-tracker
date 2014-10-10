@@ -1,0 +1,28 @@
+= form_for(work_log, url: '/log_work', html: {class: 'form-horizontal'}) do |f|
+  %input{type: 'hidden', name: 'job_id', value: job.id}
+  .form-group
+    = f.label :address, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      - work_log_address = work_log.address.value rescue ''
+      = f.select(:address, addresses.map{|address| address.value}, selected: work_log_address)
+      \-
+      = link_to 'Add New Address', "/new_address/#{job.id}"
+  .form-group
+    = f.label :work_description, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      = f.text_area :work_description, {class: 'form-control', required: true}
+  .form-group
+    = f.label :time_started, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      = f.text_field :time_started, {class: 'form-control timepicker', required: true}
+  .form-group
+    = f.label :time_ended, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      = f.text_field :time_ended, {class: 'form-control timepicker', required: true}
+  .form-group
+    = f.label :money_spent, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      = f.number_field :money_spent,  {:step => 'any', class: 'form-control', required: true}
+  .text-center
+    = link_to 'Back', '/home', {class: 'btn btn-default'}
+    = f.submit "Submit", {class: 'btn btn-sm btn-success'}

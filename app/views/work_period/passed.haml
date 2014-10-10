@@ -1,0 +1,74 @@
+.text-center
+  %h2
+    = "Your Passed Work Periods"
+%hr
+- @passed.each do |work_period|
+  #accordion.panel-group{id: "work-period-accordion-#{work_period.id}"}
+    .panel.panel-default
+      .panel-heading
+        %h4.panel-title
+          %a{"data-parent" => "#work-period-accordion-#{work_period.id}", "data-toggle" => "collapse", :href => "#work-period-collapse-#{work_period.id}"}
+            %h5.text-center
+              %i
+                .info
+                  = "Work Period Started: #{work_period.date_started.strftime('%m/%d/%y')}"
+                .info
+                  = "Work Period Ended: #{work_period.date_ended.strftime('%m/%d/%y')}"
+            %h5.text-center
+              %i.red
+                .info
+                  = "Total Hours Worked This Work Period: #{work_period.total_time}"
+                .info
+                  = "Total Money Spent This Work Period: #{number_to_currency(work_period.total_money)}"
+            %h3.text-center
+              = pluralize(work_period.jobs.count, 'Total Job', 'Total Jobs')
+      .panel-collapse.collapse.out{id: "work-period-collapse-#{work_period.id}"}
+        .panel-body
+        - work_period.jobs.each do |job|
+          - next unless job.has_work?
+          .panel-group{id: "accordion-#{job.id}"}
+            .panel.panel-default
+              .panel-heading
+                %h4.panel-title
+                  %a{"data-parent" => "#accordion-#{job.id}", "data-toggle" => "collapse", :href => "#collapse-#{job.id}"}
+                    .h3.text-center
+                      Job Name:
+                      = job.name
+                    %i.red.text-center
+                      .info
+                        = "Total Hours On Job: #{job.total_time}"
+                      .info
+                        = "Total Money Spent On Job: #{number_to_currency(job.total_money)}"
+              .panel-collapse.collapse.out{id: "collapse-#{job.id}"}
+                .panel-body
+                  - job.addresses.each do |address|
+                    - if address.has_work?
+                      .panel-group{id: "accordion-address-#{address.id}"}
+                        .panel.panel-default
+                          .panel-heading
+                            %h4.panel-title.text-center
+                              %a{"data-parent" => "#accordion-address-#{address.id}", "data-toggle" => "collapse", :href => "#collapse-address-#{address.id}"}
+                                Address:
+                                = address.value
+                          .panel-collapse.collapse.in{id: "collapse-address-#{address.id}"}
+                            .panel-body
+                              - address.work_logs.each do |work_log|
+                                .well
+                                  %h5.text-center
+                                    Date:
+                                    = work_log.date
+                                  %h5.text-center
+                                    Description:
+                                    = work_log.work_description
+                                  %h5.text-center
+                                    Time Started:
+                                    = work_log.time_started
+                                  %h5.text-center
+                                    Time Ended:
+                                    = work_log.time_ended
+                                  %h5.text-center
+                                    Money Spent:
+                                    = work_log.money_spent
+  #footer.text-center
+    = link_to 'Back', :back, {class: 'btn btn-warning'}
+    %hr

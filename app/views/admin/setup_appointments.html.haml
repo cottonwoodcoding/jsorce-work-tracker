@@ -1,0 +1,11 @@
+%h3.text-center.underline Setup Appointments
+.well.text-center
+  - @users.each do |user|
+    %a{href: "/setup_appointment/#{user.id}"}
+      = user.full_name
+%hr
+%h3.text-center.underline View Appointments
+- @users.each do |user|
+  .well.text-center
+    %a{href: "/appointments/#{user.id}"}
+      = user.full_name

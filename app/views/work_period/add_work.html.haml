@@ -1,0 +1,4 @@
+%h3.text-center.underline
+  = "Add Work For #{@job.name}"
+%hr
+= render(partial: 'shared/work_log_form', locals: {work_log: @work_log, job: @job, addresses: @addresses})

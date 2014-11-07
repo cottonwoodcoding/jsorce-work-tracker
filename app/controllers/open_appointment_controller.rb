@@ -19,7 +19,7 @@ class OpenAppointmentController < ApplicationController
 
   def update
     begin
-      @appointment.update_attributes!(params[:appointment])
+      @appointment.update_attributes!(params[:open_appointment])
       flash[:notice] = 'Appointment Updated Successfully'
     rescue => e
       flash[:notice] = "Appointment Not Updated - #{appointment.errors.full_massages.join(',')}"

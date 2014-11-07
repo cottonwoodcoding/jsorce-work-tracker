@@ -9,14 +9,19 @@
               = user.full_name
         .panel-collapse.collapse.out{:role => "tabpanel", id: "user_collapse_#{user.id}"}
           .panel-body
-            %label Total Hours This Work Period:
-            = pluralize(user.current_work_period.total_time, 'Hour', 'Hours')
-            %br
-            %label Total Money Spent This Work Period:
-            = number_to_currency user.current_work_period.total_money
+            - if user.current_work_period
+              %label Total Hours This Work Period:
+              = pluralize(user.current_work_period.total_time, 'Hour', 'Hours')
+              %br
+              %label Total Money Spent This Work Period:
+              = number_to_currency user.current_work_period.total_money
+            - else
+              %h5 No Work Period Started
 %hr
 %h3.text-center.underline Work Logs By Job
 .text-center
+  - if @jobs.empty?
+    %h5 No Jobs In Current Work Period
   - @jobs.each do |job|
     .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job.id}"}
       .panel.panel-default

@@ -94,7 +94,7 @@
                                   %h6.underline   Actions:
                                   %a{href: "/work_log/edit/#{work_log.id}"}
                                     = fa_icon 'edit 2x', class: 'edit_work_log pointer', value: work_log.id
-                                    = fa_icon 'trash-o 2x', class: 'delete_work_log pointer', value: work_log.id
+                                  = fa_icon 'trash-o 2x', class: 'delete_work_log pointer', value: work_log.id
 -else
   %h3.text-center No current Work Period. Click above to start one.
 - if @passed_work_periods_count > 0

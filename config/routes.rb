@@ -32,5 +32,6 @@ Rails.application.routes.draw do
 
   patch '/log_work', to: 'work_log#log_work'
   patch '/update_appointment/:appointment_id', to: 'appointment#update'
+  patch '/update_open_appointment/:appointment_id', to: 'open_appointment#update'
   patch '/claim_appointment/:appointment_id', to: 'open_appointment#claim'
 end

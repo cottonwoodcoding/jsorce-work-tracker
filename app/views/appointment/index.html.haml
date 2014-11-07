@@ -44,7 +44,7 @@
   .text-center
     %h3 Available Appointments
     - @open_appointments.each do |open_appointment|
-      %div
+      .well.well-sm
         %a{href: "/open_appointment/#{open_appointment.id}'"}
           = open_appointment.name
   %hr

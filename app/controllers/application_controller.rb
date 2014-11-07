@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_filter :jobs
 
   def jobs
-    @jobs ||= Job.all
+    @jobs ||= Job.all.to_a.uniq{|job| job.name}
   end
+
 end

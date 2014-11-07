@@ -1,11 +1,39 @@
 %h3.text-center.underline Setup Appointments
-.well.text-center
-  - @users.each do |user|
+.well.well-sm.text-center
+  %a{href: "/setup_open_appointment"}
+    Create New Open Appointment
+%hr
+- @users.each do |user|
+  .well.text-center
     %a{href: "/setup_appointment/#{user.id}"}
       = user.full_name
 %hr
-%h3.text-center.underline View Appointments
+%h3.text-center.underline Edit Appointments
 - @users.each do |user|
   .well.text-center
-    %a{href: "/appointments/#{user.id}"}
+    %h4
       = user.full_name
+    %hr
+    - user_appointments = user.appointments
+    - if user_appointments.empty?
+      %strong No appointments found
+    - else
+      - user.appointments.each do |appointment|
+        %div
+          %a{href: "/edit_appointment/#{appointment.id}"}
+            = appointment.name
+            \-
+            = link_to delete_appointment_path(appointment), {method: :delete} do
+              = fa_icon 'trash-o'
+- unless @open_appointments.blank?
+  %hr
+  %h3.text-center.underline Edit Open Appointments
+  - @open_appointments.each do |appointment|
+    .well.text-center
+      %a{href: "/edit_open_appointment/#{appointment.id}"}
+        = appointment.name
+        \-
+        = link_to delete_open_appointment_path(appointment), {method: :delete} do
+          = fa_icon 'trash-o'
+.text-center
+  = link_to 'Back', :index, {class: 'btn btn-default', role: 'button'}

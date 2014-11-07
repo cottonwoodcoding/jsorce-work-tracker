@@ -1,1 +1,71 @@
-%h3.text-center.underline Admin Work Logs
+.text-center
+  %h3.underline Work Period Employee Info
+  - @users.each do |user|
+    .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "user_accordian_#{user.id}"}
+      .panel.panel-default
+        .panel-heading{:role => "tab"}
+          %h4.panel-title
+            %a{"data-parent" => "#user_accordian_#{user.id}", "data-toggle" => "collapse", :href => "#user_collapse_#{user.id}"}
+              = user.full_name
+        .panel-collapse.collapse.out{:role => "tabpanel", id: "user_collapse_#{user.id}"}
+          .panel-body
+            %label Total Hours This Work Period:
+            = pluralize(user.current_work_period.total_time, 'Hour', 'Hours')
+            %br
+            %label Total Money Spent This Work Period:
+            = number_to_currency user.current_work_period.total_money
+%hr
+%h3.text-center.underline Work Logs By Job
+.text-center
+  - @jobs.each do |job|
+    .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job.id}"}
+      .panel.panel-default
+        .panel-heading{:role => "tab"}
+          %h4.panel-title
+            %a{"data-parent" => "#job_accordian_#{job.id}", "data-toggle" => "collapse", :href => "#job_collapse_#{job.id}"}
+              Job Name:
+              = job.name
+              %i.red
+                .info
+                  = "Total Hours On Job: #{Job.where(name: job.name).map{|job| job.total_time}.inject(:+)}"
+                .info
+                  = "Total Money Spent On Job: #{number_to_currency(Job.where(name: job.name).map{|job| job.total_money}.inject(:+))}"
+        .panel-collapse.collapse.out{:role => "tabpanel", id: "job_collapse_#{job.id}"}
+          .panel-body
+            - job_addresses = Address.joins(:job).where("jobs.name = '#{job.name}'").to_a.uniq{|address| address.value}
+            - job_addresses.each do |address|
+              .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "address_accordion_#{address.id}"}
+                .panel.panel-default
+                  .panel-heading{:role => "tab"}
+                    %h4.panel-title
+                      %a{"data-parent" => "#address_accordion_#{address.id}", "data-toggle" => "collapse", :href => "#address_collapse_#{address.id}"}
+                        Address:
+                        = address.value
+                  .panel-collapse.collapse.out{:role => "tabpanel", id: "address_collapse_#{address.id}"}
+                    .panel-body
+                      - work_logs = WorkLog.joins(:address).where("addresses.value = '#{address.value}'").order("addresses.created_by").to_a.uniq
+                      - work_logs.each do |work_log|
+                        - next unless WorkPeriod.find(work_log.address.job.work_period_id).active
+                        .well
+                          %h4
+                            = "Work Log By: #{User.find(Address.find(work_log.address_id).created_by).full_name}"
+                          %h5.text-center
+                            Date:
+                            = work_log.date
+                          %h5.text-center
+                            Description:
+                            = work_log.work_description
+                          %h5.text-center
+                            Time Started:
+                            = work_log.time_started
+                          %h5.text-center
+                            Time Ended:
+                            = work_log.time_ended
+                          %h5.text-center
+                            Money Spent:
+                            = work_log.money_spent
+                          %h5.text-center
+                            Spend Description:
+                            = work_log.spent_description
+.text-center
+  = link_to 'Back', :index, {class: 'btn btn-default', role: 'button'}

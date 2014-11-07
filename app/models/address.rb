@@ -1,5 +1,6 @@
 class Address < ActiveRecord::Base
-  attr_accessible :value
+  attr_accessible :value, :created_by
+  validates_uniqueness_of :created_by, scope: :value
   has_many :work_logs
   belongs_to :job
 

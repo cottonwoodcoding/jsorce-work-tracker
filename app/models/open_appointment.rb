@@ -1,7 +1,7 @@
-class Appointment < ActiveRecord::Base
-  belongs_to :user
+class OpenAppointment < ActiveRecord::Base
   attr_accessible :name, :number, :address, :scheduled, :completed, :notes, :status, :status_notes
   validates :name, :number, :address, :status, presence: true
+  validates_uniqueness_of :name
   validates :status, inclusion: {in: ['not scheduled', 'scheduled', 'no answer', 'other', 'completed']}
   after_create :set_scheduled
   after_initialize :set_status

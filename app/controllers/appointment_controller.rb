@@ -1,16 +1,16 @@
 class AppointmentController < ApplicationController
+  before_action :appointment, only: [:edit, :show, :update, :delete]
+
   def index
-    user = User.find(params[:user_id])
-    @appointments = user.appointments
+    @user = User.find(params[:user_id])
+    @appointments = @user.appointments
+    @open_appointments = OpenAppointment.all
   end
 
   def edit
-    user = User.find(params[:user_id])
-    @appointment = user.appointments.find(params[:appointment_id])
   end
 
   def show
-    @appointment = current_user.appointments.find(params[:appointment_id])
   end
 
   def new
@@ -19,9 +19,31 @@ class AppointmentController < ApplicationController
   end
 
   def create
-    user = User.find(params[:user_id])
-    user.appointments.create!(params[:appointment])
-    flash[:notice] = "Appointment for #{user.full_name} was created successfully."
+    @user = User.find(params[:user_id])
+    @user.appointments.create!(params[:appointment])
+    flash[:notice] = "Appointment for #{@user.full_name} was created successfully."
     redirect_to controller: :admin, action: :setup_appointments
+  end
+
+  def update
+    begin
+      @appointment.update_attributes!(params[:appointment])
+      flash[:notice] = 'Appointment Updated Successfully'
+    rescue => e
+      flash[:notice] = "Appointment Not Updated - #{appointment.errors.full_massages.join(',')}"
+    end
+    redirect_to action: :edit
+  end
+
+  def delete
+    @appointment.destroy
+    flash[:notice] = "Appointment Removed Successfully"
+    redirect_to :back
+  end
+
+  private
+
+  def appointment
+    @appointment = Appointment.find(params[:appointment_id])
   end
 end

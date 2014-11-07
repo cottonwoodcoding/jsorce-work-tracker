@@ -15,8 +15,8 @@ class WorkPeriodController < ApplicationController
   end
 
   def add_work
-    @job = Job.find_by_name(params[:job_name])
-    @addresses = @job.addresses.sort()
+    @job = current_user.current_work_period.jobs.where(name: params[:job_name], created_by: current_user.id).first_or_create!
+    @addresses = Job.where(name: @job.name).map{|job| job.addresses}.flatten.uniq{|address| address.value}.sort()
     @work_log = WorkLog.new
   end
 

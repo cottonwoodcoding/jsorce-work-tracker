@@ -50,7 +50,7 @@
                               %a{"data-parent" => "#accordion-address-#{address.id}", "data-toggle" => "collapse", :href => "#collapse-address-#{address.id}"}
                                 Address:
                                 = address.value
-                          .panel-collapse.collapse.in{id: "collapse-address-#{address.id}"}
+                          .panel-collapse.collapse.out{id: "collapse-address-#{address.id}"}
                             .panel-body
                               - address.work_logs.each do |work_log|
                                 .well
@@ -70,5 +70,4 @@
                                     Money Spent:
                                     = work_log.money_spent
   #footer.text-center
-    = link_to 'Back', :back, {class: 'btn btn-warning'}
-    %hr
+    = link_to 'Back', :back, {class: 'btn btn-default'}

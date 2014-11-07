@@ -23,6 +23,10 @@
     = f.label :money_spent, {class: 'col-sm-2 control-label'}
     .col-sm-9
       = f.number_field :money_spent,  {:step => 'any', class: 'form-control', required: true}
+  .form-group
+    = f.label :spent_description, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      = f.text_area :spent_description, {class: 'form-control'}
   .text-center
     = link_to 'Back', '/home', {class: 'btn btn-default'}
-    = f.submit "Submit", {class: 'btn btn-sm btn-success'}
+    = f.submit "Submit", {class: 'btn btn-sm btn-warning'}

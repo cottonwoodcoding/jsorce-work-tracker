@@ -1,10 +1,9 @@
 class WorkLogController < ApplicationController
   before_action :authenticate_user!
-  before_filter :check_admin, only: [:admin]
 
   def log_work
     job = Job.find(params[:job_id])
-    address = Address.find_by_value(params[:work_log].delete(:address))
+    address = Address.find_or_create_by(created_by: current_user.id, value: params[:work_log].delete(:address))
     work_log = WorkLog.new(params[:work_log])
     work_log.date = Time.now
     total_hours = (Time.parse(params[:work_log][:time_ended]) - Time.parse(params[:work_log][:time_started])) / 3600
@@ -30,11 +29,5 @@ class WorkLogController < ApplicationController
     @work_log = WorkLog.find(params[:work_log_id])
     @job = @work_log.address.job
     @addresses = @job.addresses
-  end
-
-  private
-
-  def check_admin
-    render text: 'You are unauthorized to view this page.', status: :unauthorized unless current_user.role == 'admin'
   end
 end

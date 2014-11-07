@@ -4,7 +4,10 @@ class JobController < ApplicationController
   end
 
   def create
-    Job.create!(params[:job])
+    job =  Job.new(params[:job])
+    current_user.current_work_period.jobs << job
+    job.created_by = current_user.id
+    job.save
     redirect_to controller: :home, action: :index
   end
 end

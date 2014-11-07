@@ -36,16 +36,6 @@
               %a{href: "/edit_appointment/#{appointment.id}"}
                 = fa_icon 'edit 2x'
               - if admin?
-                = link_to delete_appointment_path(appointment), {method: :delete} do
-                  = fa_icon 'trash-o 2x'
-  %hr
-- unless@open_appointments.empty?
-  %hr
-  .text-center
-    %h3 Available Appointments
-    - @open_appointments.each do |open_appointment|
-      %a{href: "/open_appointment/#{open_appointment.id}'"}
-        = open_appointment.name
-  %hr
+                = fa_icon 'trash-o 2x'
 .text-center
-  = link_to 'Back', :index, {class: 'btn btn-default', role: 'button'}
+  = link_to 'Back', :back, {class: 'btn btn-default', role: 'button'}

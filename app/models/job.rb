@@ -1,9 +1,9 @@
 class Job < ActiveRecord::Base
-  attr_accessible :name
-  validates :name, presence: true
-  validates :name, uniqueness: true
+  attr_accessible :name, :created_by
+  validates :name, :created_by, presence: true
+  validates :name, :uniqueness => {:scope => [:created_by, :work_period_id]}
   has_many :addresses, dependent: :destroy
-  belongs_to :work_period
+  has_many :work_periods
 
   def total_time
     self.addresses.map{|address| address.total_time}.inject(:+) || 0
@@ -14,6 +14,6 @@ class Job < ActiveRecord::Base
   end
 
   def has_work?
-    self.addresses.map {|address| address.work_logs.count}.inject(:+) > 0
+    self.addresses.map {|address| address.work_logs.count}.inject(:+) > 0 rescue false
   end
 end

@@ -1,7 +1,7 @@
 %h3.text-center
   = "Edit Appointment"
 %hr
-= form_for @appointment, url: "/update_appointment/#{@appointment.id}'", html: {class: 'form form-horizontal'} do |f|
+= form_for @appointment, url: "/update_appointment/#{@appointment.id}", html: {class: 'form form-horizontal'} do |f|
   .form-group
     = f.label :name, {class: 'control-label col-sm-2'}
     .col-sm-9

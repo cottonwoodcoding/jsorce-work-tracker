@@ -4,7 +4,7 @@ class AppointmentController < ApplicationController
   def index
     @user = User.find(params[:user_id])
     @appointments = @user.appointments
-    @open_appointments = OpenAppointment.all
+    @open_appointments = OpenAppointment.all.sort_by{|open_appintment| open_appintment.name}
   end
 
   def edit

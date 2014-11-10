@@ -23,6 +23,7 @@
   - if @jobs.empty?
     %h5 No Jobs In Current Work Period
   - @jobs.each do |job|
+    - next unless job.has_work?
     .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job.id}"}
       .panel.panel-default
         .panel-heading{:role => "tab"}
@@ -70,7 +71,7 @@
                             Money Spent:
                             = work_log.money_spent
                           %h5.text-center
-                            Spend Description:
+                            Spent Description:
                             = work_log.spent_description
 .text-center
   = link_to 'Back', :index, {class: 'btn btn-default', role: 'button'}

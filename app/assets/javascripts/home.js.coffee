@@ -1,11 +1,13 @@
 $ ->
   $('#end_work_period').click (e) ->
     e.preventDefault()
-    $.ajax
-      url: $(@).attr('href')
-      type: 'POST'
-      success: ->
-        window.location.reload()
+    end_work_period = confirm('Really end your work period? This cannot be undone.')
+    if end_work_period
+      $.ajax
+        url: $(@).attr('href')
+        type: 'POST'
+        success: ->
+          window.location.reload()
 
   $('#job_select').on 'change', ->
     $value = $(@).val().trim()

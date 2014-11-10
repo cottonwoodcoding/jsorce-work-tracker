@@ -4,7 +4,7 @@
     = f.label :address, {class: 'col-sm-2 control-label'}
     .col-sm-9
       - work_log_address = work_log.address.value rescue ''
-      = f.select(:address, addresses.map{|address| address.value}, selected: work_log_address)
+      = f.select :address, addresses.map{|address| address.value}, { :include_blank => '-- Select One --' }, :required => true
       \-
       = link_to 'Add New Address', "/new_address/#{job.id}"
   .form-group
@@ -22,7 +22,7 @@
   .form-group
     = f.label :money_spent, {class: 'col-sm-2 control-label'}
     .col-sm-9
-      = f.number_field :money_spent,  {:step => 'any', class: 'form-control', required: true}
+      = f.number_field :money_spent,  {:step => 'any', class: 'form-control'}
   .form-group
     = f.label :spent_description, {class: 'col-sm-2 control-label'}
     .col-sm-9

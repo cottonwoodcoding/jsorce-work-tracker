@@ -11,7 +11,7 @@ class AdminController < ApplicationController
 
   def work_logs_by_address
     @address_name = params[:address_value]
-    @work_logs = WorkLog.joins(:address).where('addresses.value = ?', @address_name).order("addresses.created_by")
+    @work_logs = WorkLog.joins(:address).where('TRIM(addresses.value) = ?', @address_name).order("addresses.created_by")
   end
 
   private

@@ -15,4 +15,8 @@ class WorkPeriod < ActiveRecord::Base
   def total_money
     self.jobs.map{|job| job.total_money}.inject(:+) || 0
   end
+
+  def jobs?
+    self.jobs.count > 0
+  end
 end

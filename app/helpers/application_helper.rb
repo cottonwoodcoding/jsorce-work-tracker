@@ -15,6 +15,6 @@ module ApplicationHelper
   end
 
   def minutes_in_words(minutes)
-    distance_of_time_in_words(Time.at(0), Time.at(minutes * 60), {include_seconds: true})
+    Time.at(minutes * 60).utc.strftime("%H Hours - %M Minutes").to_s
   end
 end

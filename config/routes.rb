@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   post '/start_work_period', to: 'work_period#start'
   post '/end_work_period', to: 'work_period#end'
   post '/create_job', to: 'job#create'
-  post '/log_work', to: 'work_log#log_work'
+  post '/create_work_log', to: 'work_log#create'
   post '/create_address', to: 'address#create'
   post '/work_log/delete/:work_log_id', to: 'work_log#delete'
   post '/work_log/edit/:work_log_id', to: 'work_log#edit'
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   delete '/delete_open_appointment/:appointment_id', to: 'open_appointment#delete', as: :delete_open_appointment
   delete '/delete_appointment/:appointment_id', to: 'appointment#delete', as: :delete_appointment
 
-  patch '/log_work', to: 'work_log#log_work'
+  patch '/update_work_log/:id', to: 'work_log#update'
   patch '/update_appointment/:appointment_id', to: 'appointment#update'
   patch '/update_open_appointment/:appointment_id', to: 'open_appointment#update'
   patch '/claim_appointment/:appointment_id', to: 'open_appointment#claim'

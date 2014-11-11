@@ -15,6 +15,6 @@ module ApplicationHelper
   end
 
   def minutes_in_words(minutes)
-    Time.at(minutes * 60).utc.strftime("%H Hours - %M Minutes").to_s
+    Time.at(minutes).utc.strftime("%d Days - %H Hours - %M Minutes").to_s
   end
 end

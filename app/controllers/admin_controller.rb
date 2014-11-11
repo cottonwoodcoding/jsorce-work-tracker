@@ -12,6 +12,6 @@ class AdminController < ApplicationController
   private
 
   def users
-    @users = User.all
+    @users = User.all.sort{|user| user.full_name}
   end
 end

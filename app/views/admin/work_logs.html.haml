@@ -89,7 +89,7 @@
               = user.full_name
         .panel-collapse.collapse.out{:role => "tabpanel", id: "collapse_#{user.id}"}
           .panel-body
-            - if user.current_work_period.has_jobs?
+            - if user.current_work_period.jobs?
               - user.current_work_period.jobs.each do |job|
                 .panel-group{:role => "tablist", id: "user_job_accordian_#{job.id}"}
                   .panel.panel-default

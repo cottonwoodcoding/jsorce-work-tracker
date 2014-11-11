@@ -20,6 +20,10 @@
     .col-sm-9
       = f.text_field :time_ended, {class: 'form-control timepicker', required: true}
   .form-group
+    = f.label :break, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      = f.select :break, ['30 Minutes', '45 Minutes', '60 Minutes'], { :include_blank => '-- Select One --' }
+  .form-group
     = f.label :money_spent, {class: 'col-sm-2 control-label'}
     .col-sm-9
       = f.number_field :money_spent,  {:step => 'any', class: 'form-control'}

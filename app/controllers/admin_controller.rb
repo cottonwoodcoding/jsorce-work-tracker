@@ -2,7 +2,7 @@ class AdminController < ApplicationController
   before_filter :users
 
   def work_logs
-    @jobs = current_user.current_work_period.jobs
+    @jobs = Job.all.uniq{|job| job.name}
   end
 
   def setup_appointments

@@ -15,6 +15,7 @@ module ApplicationHelper
   end
 
   def minutes_in_words(minutes)
-    Time.at(minutes).utc.strftime("%d Days - %H Hours - %M Minutes").to_s
+    values = (minutes.to_f / 60.0).round(2).to_s.split('.')
+    "#{pluralize(values.first, 'hour')} - #{pluralize(values.last, 'minute')}"
   end
 end

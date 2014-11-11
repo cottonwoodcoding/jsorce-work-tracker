@@ -15,6 +15,6 @@ module ApplicationHelper
   end
 
   def minutes_in_words(minutes)
-    distance_of_time_in_words(Time.at(0), Time.at(minutes * 60))
+    distance_of_time_in_words(Time.at(0), Time.at(minutes * 60), {include_seconds: true})
   end
 end

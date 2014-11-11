@@ -76,5 +76,58 @@
                           %h5.text-center
                             Spent Description:
                             = work_log.spent_description
+%hr
+%h3.text-center.underline Work Logs By Employee
+.text-center
+  - @users.each do |user|
+    .panel-group{:role => "tablist", id: "accordian_#{user.id}"}
+      .panel.panel-default
+        .panel-heading{:role => "tab"}
+          %h4.panel-title
+            %a{"data-parent" => "#accordian_#{user.id}", "data-toggle" => "collapse", :href => "#collapse_#{user.id}"}
+              = user.full_name
+        .panel-collapse.collapse.out{:role => "tabpanel", id: "collapse_#{user.id}"}
+          .panel-body
+            - user.current_work_period.jobs.each do |job|
+              .panel-group{:role => "tablist", id: "user_job_accordian_#{job.id}"}
+                .panel.panel-default
+                  .panel-heading{:role => "tab"}
+                    %h4.panel-title
+                      %a{"data-parent" => "#user_job_accordian_#{job.id}", "data-toggle" => "collapse", :href => "#user_job_collapse_#{job.id}"}
+                        = job.name
+                  .panel-collapse.collapse.out{:role => "tabpanel", id: "user_job_collapse_#{job.id}"}
+                    .panel-body
+                      - job.addresses.each do |address|
+                        .panel-group{:role => "tablist", id: "user_address_accordian_#{address.id}"}
+                          .panel.panel-default
+                            .panel-heading{:role => "tab"}
+                              %h4.panel-title
+                                %a{"data-parent" => "#user_address_accordian_#{address.id}", "data-toggle" => "collapse", :href => "#user_address_collapse_#{address.id}"}
+                                  = address.value
+                            .panel-collapse.collapse.out{:role => "tabpanel", id: "user_address_collapse_#{address.id}"}
+                              .panel-body
+                                - address.work_logs.sort_by{|work_log| work_log.updated_at}.each do |work_log|
+                                  .well
+                                    %h5.text-center
+                                      Date:
+                                      = work_log.date
+                                    %h5.text-center
+                                      Description:
+                                      = work_log.work_description
+                                    %h5.text-center
+                                      Time Started:
+                                      = work_log.time_started
+                                    %h5.text-center
+                                      Time Ended:
+                                      = work_log.time_ended
+                                    %h5.text-center
+                                      Break Minutes:
+                                      = work_log.break_minutes
+                                    %h5.text-center
+                                      Money Spent:
+                                      = work_log.money_spent
+                                    %h5.text-center
+                                      Spent Description:
+                                      = work_log.spent_description
 .text-center
   = link_to 'Back', :index, {class: 'btn btn-default', role: 'button'}

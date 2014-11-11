@@ -10,8 +10,8 @@
         .panel-collapse.collapse.out{:role => "tabpanel", id: "user_collapse_#{user.id}"}
           .panel-body
             - if user.current_work_period
-              %label Total Hours This Work Period:
-              = pluralize(user.current_work_period.total_time, 'Hour', 'Hours')
+              %label Total Time This Work Period:
+              = minutes_in_words(user.current_work_period.total_time)
               %br
               %label Total Money Spent This Work Period:
               = number_to_currency user.current_work_period.total_money
@@ -33,7 +33,7 @@
               = job.name
               %i.red
                 .info
-                  = "Total Hours On Job: #{Job.where(name: job.name).map{|job| job.total_time}.inject(:+)}"
+                  = "Total Time On Job: #{minutes_in_words(Job.where(name: job.name).map{|job| job.total_time}.inject(:+))}"
                 .info
                   = "Total Money Spent On Job: #{number_to_currency(Job.where(name: job.name).map{|job| job.total_money}.inject(:+))}"
         .panel-collapse.collapse.out{:role => "tabpanel", id: "job_collapse_#{job.id}"}

@@ -38,7 +38,7 @@
   %h5.text-center
     %i.red
       .info
-        = "Total Hours Worked This Work Period: #{@current_work_period.total_time}"
+        = "Total Time Worked This Work Period: #{minutes_in_words(@current_work_period.total_time)}"
       .info
         = "Total Money Spent This Work Period: #{number_to_currency(@current_work_period.total_money)}"
   .container-fluid.text-center
@@ -65,7 +65,7 @@
                     = job.name
                   %i.red
                     .info
-                      = "Total Hours On Job: #{job.total_time}"
+                      = "Total Time On Job: #{minutes_in_words(job.total_time)}"
                     .info
                       = "Total Money Spent On Job: #{number_to_currency(job.total_money)}"
             .panel-collapse.collapse.out{id: "collapse-#{job.id}"}

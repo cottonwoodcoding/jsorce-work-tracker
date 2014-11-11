@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141111012721) do
+ActiveRecord::Schema.define(version: 20141111040956) do
 
   create_table "addresses", force: true do |t|
     t.string   "value"
@@ -80,7 +80,7 @@ ActiveRecord::Schema.define(version: 20141111012721) do
   create_table "work_logs", force: true do |t|
     t.date     "date"
     t.text     "work_description"
-    t.string   "total_hours_worked"
+    t.string   "total_time_worked"
     t.string   "time_started"
     t.string   "time_ended"
     t.string   "money_spent"

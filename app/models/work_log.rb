@@ -1,5 +1,5 @@
 class WorkLog < ActiveRecord::Base
-  attr_accessible :work_description, :total_hours_worked, :time_started, :time_ended, :money_spent, :spent_description, :date, :break
+  attr_accessible :work_description, :total_minutes_worked, :time_started, :time_ended, :money_spent, :spent_description, :date, :break
   belongs_to :address
   after_initialize :set_money_spent
 

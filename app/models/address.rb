@@ -5,7 +5,7 @@ class Address < ActiveRecord::Base
   belongs_to :job
 
   def total_time
-    self.work_logs.map{|wl| wl.total_hours_worked.to_i}.compact.inject(:+) || 0
+    self.work_logs.map{|wl| wl.total_time_worked.to_f}.compact.inject(:+) || 0
   end
 
   def total_money

@@ -9,6 +9,11 @@ class AdminController < ApplicationController
     @open_appointments = OpenAppointment.all.sort_by{|open_appintment| open_appintment.name}
   end
 
+  def work_logs_by_address
+    @address_name = params[:address_value]
+    @work_logs = WorkLog.joins(:address).where('addresses.value = ?', @address_name).order("addresses.created_by")
+  end
+
   private
 
   def users

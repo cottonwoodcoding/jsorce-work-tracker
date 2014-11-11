@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get '/edit_open_appointment/:appointment_id', to: 'open_appointment#edit'
   get '/setup_open_appointment', to: 'open_appointment#new'
   get '/open_appointment/:appointment_id', to: 'open_appointment#show'
+  get '/work_logs_by_address/:address_value', to: 'admin#work_logs_by_address', constraints: { address_value:  /.*/ }
 
   post '/start_work_period', to: 'work_period#start'
   post '/end_work_period', to: 'work_period#end'

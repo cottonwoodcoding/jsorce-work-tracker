@@ -8,7 +8,7 @@
     %a{href: "/setup_appointment/#{user.id}"}
       = user.full_name
 %hr
-%h3.text-center.underline Edit Appointments
+%h3.text-center.underline View Appointments
 - @users.each do |user|
   .text-center
     .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "user_appointments_accordian_#{user.id}"}
@@ -23,7 +23,40 @@
             - if user_appointments.empty?
               %strong No appointments found
             - else
-              - user.appointments.each do |appointment|
+              %h5.underline Not Scheduled
+              - user.appointments.where(status: 'not scheduled').each do |appointment|
+                %div
+                  %a{href: "/edit_appointment/#{appointment.id}"}
+                    = appointment.name
+                    \-
+                    = link_to delete_appointment_path(appointment), {method: :delete} do
+                      = fa_icon 'trash-o'
+              %h5.underline Scheduled
+              - user.appointments.where(status: 'Scheduled').each do |appointment|
+                %div
+                  %a{href: "/edit_appointment/#{appointment.id}"}
+                    = appointment.name
+                    \-
+                    = link_to delete_appointment_path(appointment), {method: :delete} do
+                      = fa_icon 'trash-o'
+              %h5.underline No Answer
+              - user.appointments.where(status: 'no answer').each do |appointment|
+                %div
+                  %a{href: "/edit_appointment/#{appointment.id}"}
+                    = appointment.name
+                    \-
+                    = link_to delete_appointment_path(appointment), {method: :delete} do
+                      = fa_icon 'trash-o'
+              %h5.underline Other
+              - user.appointments.where(status: 'other').each do |appointment|
+                %div
+                  %a{href: "/edit_appointment/#{appointment.id}"}
+                    = appointment.name
+                    \-
+                    = link_to delete_appointment_path(appointment), {method: :delete} do
+                      = fa_icon 'trash-o'
+              %h5.underline Completed
+              - user.appointments.where(status: 'completed').each do |appointment|
                 %div
                   %a{href: "/edit_appointment/#{appointment.id}"}
                     = appointment.name

@@ -2,6 +2,7 @@ class HomeController < ApplicationController
   before_filter :jobs
 
   def index
+    @addresses = Address.all.to_a.uniq{|a| a.value}.sort
     if @current_work_period = current_user.current_work_period
       @work_period_jobs = @current_work_period.jobs
     end

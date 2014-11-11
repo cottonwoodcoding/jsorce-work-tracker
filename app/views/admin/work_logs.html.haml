@@ -80,6 +80,7 @@
 %h3.text-center.underline Work Logs By Employee
 .text-center
   - @users.each do |user|
+    - next unless user.current_work_period
     .panel-group{:role => "tablist", id: "accordian_#{user.id}"}
       .panel.panel-default
         .panel-heading{:role => "tab"}

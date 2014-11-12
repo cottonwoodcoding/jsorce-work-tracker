@@ -14,6 +14,6 @@ class Job < ActiveRecord::Base
   end
 
   def has_work?
-    self.addresses.map {|address| address.work_logs.count}.inject(:+) > 0 rescue false
+    Job.where(name: self.name).map{|job| job.addresses.map {|address| address.work_logs.count}.inject(:+) > 0 rescue 0}.include? true
   end
 end

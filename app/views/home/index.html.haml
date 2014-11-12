@@ -47,7 +47,7 @@
           %option{value: '/new_job'}
             Add A Job
       %hr
-      - @work_period_jobs.where(created_by: current_user.id).each do |job|
+      - @work_period_jobs.each do |job|
         - next unless job.has_work?
         .panel-group{id: "accordion-#{job.id}"}
           .panel.panel-default

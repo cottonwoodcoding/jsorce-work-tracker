@@ -54,20 +54,6 @@
                             .panel-body
                               - address.work_logs.each do |work_log|
                                 .well
-                                  %h5.text-center
-                                    Date:
-                                    = work_log.date
-                                  %h5.text-center
-                                    Description:
-                                    = work_log.work_description
-                                  %h5.text-center
-                                    Time Started:
-                                    = work_log.time_started
-                                  %h5.text-center
-                                    Time Ended:
-                                    = work_log.time_ended
-                                  %h5.text-center
-                                    Money Spent:
-                                    = work_log.money_spent
+                                  = render(partial: 'shared/work_log_details', locals: {work_log: work_log})
   #footer.text-center
     = link_to 'Back', :back, {class: 'btn btn-default'}

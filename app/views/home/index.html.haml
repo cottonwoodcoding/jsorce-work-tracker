@@ -18,10 +18,6 @@
             - @addresses.each do |address|
               %option{value: "/work_logs_by_address/#{address.value}"}
                 = address.value
-  - if !@current_work_period
-    %form{method: 'POST', action: "/start_work_period"}
-      = hidden_field_tag :authenticity_token, form_authenticity_token
-      %button.btn.btn-warning{type: 'submit'} Start Work Period
 %hr
 - if current_user.work_periods.empty?
   .text-center
@@ -31,7 +27,6 @@
     Current Work Period
   .text-center
     = link_to 'Manage My Appointments', "/appointments/#{current_user.id}", {class: 'btn btn-default'}
-    = link_to 'End Work Period', '/end_work_period', {id: 'end_work_period', class: 'btn btn-warning'}
   %h5.text-center
     %i
       = "Work Period Started: #{@current_work_period.date_started.strftime('%m/%d/%y')}"
@@ -83,28 +78,7 @@
                           .panel-body
                             - address.work_logs.sort_by{|work_log| work_log.updated_at}.reverse.each do |work_log|
                               .well
-                                %h5.text-center
-                                  Date:
-                                  = work_log.date
-                                %h5.text-center
-                                  Description:
-                                  = work_log.work_description
-                                %h5.text-center
-                                  Time Started:
-                                  = work_log.time_started
-                                %h5.text-center
-                                  Time Ended:
-                                  = work_log.time_ended
-                                - unless work_log.break_minutes.blank?
-                                  %h5.text-center
-                                    Break Minutes:
-                                    = work_log.break_minutes
-                                %h5.text-center
-                                  Money Spent:
-                                  = work_log.money_spent
-                                %h5.text-center
-                                  Spent Description:
-                                  = work_log.spent_description
+                                = render(partial: 'shared/work_log_details', locals: {work_log: work_log})
                                 %hr
                                   %h6.underline   Actions:
                                   %a{href: "/work_log/edit/#{work_log.id}"}

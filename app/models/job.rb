@@ -13,7 +13,11 @@ class Job < ActiveRecord::Base
     self.addresses.map{|address| address.total_money}.inject(:+) || 0
   end
 
-  def has_work?
+  def any_has_work?
     Job.where(name: self.name).map{|job| job.addresses.map {|address| address.work_logs.count}.inject(:+) > 0 rescue 0}.include? true
+  end
+
+  def has_work?
+    self.addresses.map {|address| address.work_logs.count}.inject(:+) > 0 rescue 0
   end
 end

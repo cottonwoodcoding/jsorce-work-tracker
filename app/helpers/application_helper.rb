@@ -16,6 +16,9 @@ module ApplicationHelper
 
   def minutes_in_words(minutes)
     values = (minutes.to_f / 60.0).round(2).to_s.split('.')
-    "#{pluralize(values.first, 'hour')} - #{pluralize(values.last, 'minute')}"
+    hours = values.first
+    minutes = ((values.last.to_f * 60) / 100).round
+    minutes = 30 if minutes == 3.0
+    "#{pluralize(hours, 'hour')} - #{pluralize(minutes, 'minute')}"
   end
 end

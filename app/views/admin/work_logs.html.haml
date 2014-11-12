@@ -23,7 +23,7 @@
   - if @jobs.empty?
     %h5 No Jobs In Current Work Period
   - @jobs.each do |job|
-    - next unless job.has_work?
+    - next unless job.any_has_work?
     .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job.id}"}
       .panel.panel-default
         .panel-heading{:role => "tab"}

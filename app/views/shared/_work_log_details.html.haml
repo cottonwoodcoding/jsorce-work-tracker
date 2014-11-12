@@ -10,6 +10,9 @@
 %h5.text-center
   Time Ended:
   = work_log.time_ended
+%h5.text-center
+  Total Time Worked:
+  = minutes_in_words(work_log.total_time_worked)
 - unless work_log.break_minutes.blank?
   %h5.text-center
     Break Minutes:

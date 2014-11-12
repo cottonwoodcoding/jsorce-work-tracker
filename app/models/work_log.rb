@@ -9,7 +9,7 @@ class WorkLog < ActiveRecord::Base
   end
 
   def break_minutes
-    self.break / 60 rescue 0
+    self.break.to_s
   end
 
   def calc_total_minutes_worked

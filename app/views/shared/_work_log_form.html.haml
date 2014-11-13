@@ -23,7 +23,7 @@
   .form-group
     = f.label :break, {class: 'col-sm-2 control-label'}
     .col-sm-9
-      = f.select :break, options_for_select([['30 Minutes', '30'], ['45 Minutes', '45'], ['60 Minutes', '60']], @work_log.break), { :include_blank => '-- Select One --' }, {class: 'selectpicker', 'data-live-search' => 'true', required: true}
+      = f.select :break, options_for_select([['30 Minutes', '30'], ['45 Minutes', '45'], ['60 Minutes', '60']], @work_log.break), { :include_blank => '-- Select One --' }, {class: 'selectpicker', 'data-live-search' => 'true'}
   .form-group
     = f.label :money_spent, {class: 'col-sm-2 control-label'}
     .col-sm-9

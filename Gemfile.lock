@@ -44,6 +44,7 @@ GEM
       execjs
     coffee-script-source (1.8.0)
     columnize (0.8.9)
+    commonjs (0.2.7)
     crack (0.4.2)
       safe_yaml (~> 1.0.0)
     daemons (1.1.9)
@@ -92,6 +93,8 @@ GEM
       thor (>= 0.14, < 2.0)
     json (1.8.1)
     kgio (2.9.2)
+    less (2.5.1)
+      commonjs (~> 0.2.7)
     libv8 (3.16.14.7)
     mail (2.5.4)
       mime-types (~> 1.16)
@@ -237,6 +240,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   kgio
+  less
   memcachier
   pg
   protected_attributes

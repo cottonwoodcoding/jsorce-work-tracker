@@ -12,7 +12,7 @@
       .form-group
         %label{class: 'col-sm-2 control-label'} Address:
         .col-sm-9
-          %select#admin_address_select.form-control
+          %select#admin_address_select.form-control.selectpicker{'data-live-search' => 'true'}
             %option{value: 'blank'} --Select Address--
             - @addresses.each do |address|
               %option{value: "/work_logs_by_address/#{address.value}"}
@@ -39,7 +39,7 @@
     .row
       %h3
         %label Select A Job To Add Work To:
-        %select#job_select
+        %select#job_select.selectpicker{'data-live-search' => 'true'}
           %option{value: 'blank'} Select A Job
           - @jobs.each do |job|
             %option{value: "/add_work/#{job.name}"}

@@ -24,7 +24,7 @@ gem 'spring',        group: :development
 
 gem 'devise'
 gem 'simple_form'
-
+gem 'less'
 gem "bootstrap-sass", "~> 3.2.0"
 gem "autoprefixer-rails"
 gem "font-awesome-rails"

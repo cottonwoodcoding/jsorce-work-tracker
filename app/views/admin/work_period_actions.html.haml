@@ -1,6 +1,6 @@
 .text-center
-  %h3.underline Work Period Actions
-  - if active_work_periods?
+  - unless @active_work_period_users.empty?
+    %h3.underline Work Period Actions
     %h5 Users With Active Work Periods:
     - @active_work_period_users.each do |user|
       %strong
@@ -8,21 +8,20 @@
       \- Started:
       = user.current_work_period.date_started
       %br
+    = link_to 'End Active Work Periods', "end_active_work_periods/#{@active_work_period_users.map{|user| user.id}.join(',')}", data: {:confirm => 'Are you sure you want to end active work periods? This cannot be undone!'}, method: :post, class: 'btn btn-warning'
     %hr
-    = link_to 'End Active Work Periods', "end_active_work_periods/#{@active_work_period_users.map{|user| user.id}.join(',')}", data: {:confirm => 'Are you sure you want to end all active work periods? This cannot be undone!'}, method: :post, class: 'btn btn-warning'
-  - else
+  - unless @inactive_work_period_users.empty?
     %h5 Start Work Periods
     %form.form.form-horizontal{:role => "form", method: 'POST', action: '/start_work_periods'}
       = hidden_field_tag :authenticity_token, form_authenticity_token
-      - @users.each do |user|
+      - @inactive_work_period_users.each do |user|
         .form-group
           .col-sm-offset-2.col-sm-8
             .checkbox
               %label
                 %input{:type => "checkbox", name: "users[#{user.full_name}]", value: user.id}
                   = user.full_name
-      %hr
       %button.btn.btn-warning{type: 'submit'} Start Work Periods
-  %hr
+    %hr
 .text-center
   = link_to 'Back', :index, {class: 'btn btn-default'}

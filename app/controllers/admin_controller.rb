@@ -3,6 +3,7 @@ class AdminController < ApplicationController
 
   def work_period_actions
     @active_work_period_users = WorkPeriod.joins(:user).where(active: true).map{|wp| wp.user}
+    @inactive_work_period_users = @users - @active_work_period_users
   end
 
   def end_active_work_periods

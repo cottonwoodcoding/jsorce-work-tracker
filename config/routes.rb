@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get '/add_work/:job_name', to: 'work_period#add_work'
   get '/new_job', to: 'job#new'
   get '/new_address/:job_id', to: 'address#new'
-  get '/passed_work_periods', to: 'work_period#passed'
+  get '/passed_work_periods/:id', to: 'work_period#passed'
   get '/work_log/edit/:work_log_id', to: 'work_log#edit'
   get '/setup_appointments', to: 'admin#setup_appointments'
   get '/appointments/:user_id', to: 'appointment#index'
@@ -18,6 +18,8 @@ Rails.application.routes.draw do
   get '/open_appointment/:appointment_id', to: 'open_appointment#show'
   get '/work_logs_by_address/:address_value', to: 'admin#work_logs_by_address', constraints: { address_value:  /.*/ }
   get '/work_period_actions', to: 'admin#work_period_actions'
+  get '/passed_work_periods', to: 'admin#passed_work_periods'
+  get '/passed_work_period/:id', to: 'admin#passed_work_period'
 
   post '/start_work_period', to: 'work_period#start'
   post '/end_work_period', to: 'work_period#end'

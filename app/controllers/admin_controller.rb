@@ -6,6 +6,16 @@ class AdminController < ApplicationController
     @inactive_work_period_users = @users - @active_work_period_users
   end
 
+  def passed_work_periods
+    #TODO: should probably paginate this at some point
+    @passed_work_periods = PassedWorkPeriod.all.sort_by{|work_period| work_period.updated_at}
+  end
+
+  def passed_work_period
+    @passed_work_period = PassedWorkPeriod.find(params[:id])
+    @work_periods = WorkPeriod.where(id: @passed_work_period.work_period_ids)
+  end
+
   def end_active_work_periods
     users = User.where(id: params[:ids].split(','))
     work_period_ids = []

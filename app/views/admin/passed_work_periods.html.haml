@@ -1,0 +1,11 @@
+.text-center
+  %h3.underline Passed Work Periods
+  - if @passed_work_periods.empty?
+    %strong No Passed Work Periods.
+  - else
+    - @passed_work_periods.each do |passed_work_period|
+      = link_to "Ended #{passed_work_period.updated_at.strftime('%v')}", "/passed_work_period/#{passed_work_period.id}"
+      %br
+%hr
+.text-center
+  = link_to 'Back', :index, class: 'btn btn-default'

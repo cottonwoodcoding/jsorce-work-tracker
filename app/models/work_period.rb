@@ -19,4 +19,10 @@ class WorkPeriod < ActiveRecord::Base
   def jobs?
     self.jobs.count > 0
   end
+
+  def conclude
+    self.date_ended = Time.now
+    self.active = false
+    self.save
+  end
 end

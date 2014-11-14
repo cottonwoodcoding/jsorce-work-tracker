@@ -17,6 +17,7 @@ Rails.application.routes.draw do
   get '/setup_open_appointment', to: 'open_appointment#new'
   get '/open_appointment/:appointment_id', to: 'open_appointment#show'
   get '/work_logs_by_address/:address_value', to: 'admin#work_logs_by_address', constraints: { address_value:  /.*/ }
+  get '/work_period_actions', to: 'admin#work_period_actions'
 
   post '/start_work_period', to: 'work_period#start'
   post '/end_work_period', to: 'work_period#end'
@@ -27,6 +28,8 @@ Rails.application.routes.draw do
   post '/work_log/edit/:work_log_id', to: 'work_log#edit'
   post '/create_appointment', to: 'appointment#create'
   post '/create_open_appointment', to: 'open_appointment#create'
+  post '/end_active_work_periods/:ids', to: 'admin#end_active_work_periods'
+  post '/start_work_periods', to: 'admin#start_work_periods'
 
   delete '/delete_open_appointment/:appointment_id', to: 'open_appointment#delete', as: :delete_open_appointment
   delete '/delete_appointment/:appointment_id', to: 'appointment#delete', as: :delete_appointment

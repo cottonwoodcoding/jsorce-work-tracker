@@ -21,4 +21,8 @@ module ApplicationHelper
     minutes = 30 if minutes == 3.0
     "#{pluralize(hours, 'hour')} - #{pluralize(minutes, 'minute')}"
   end
+
+  def active_work_periods?
+    WorkPeriod.where(active: true).count > 0
+  end
 end

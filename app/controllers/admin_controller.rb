@@ -1,6 +1,30 @@
 class AdminController < ApplicationController
   before_filter :users
 
+  def work_period_actions
+    @active_work_period_users = WorkPeriod.joins(:user).where(active: true).map{|wp| wp.user}
+  end
+
+  def end_active_work_periods
+    users = User.where(id: params[:ids].split(','))
+    work_period_ids = []
+    users.each do |user|
+      current_work_period = user.current_work_period
+      current_work_period.conclude
+      work_period_ids << current_work_period.id
+    end
+    PassedWorkPeriod.create!(work_period_ids: work_period_ids)
+    flash[:notice] = "#{users.map{|u| u.full_name}.join(',')} Work Periods Were Ended Successfully."
+    redirect_to action: :work_period_actions
+  end
+
+  def start_work_periods
+    users = User.where(id: params[:users].values)
+    users.each{ |user| user.work_periods.create!(date_started: Time.now) }
+    flash[:notice] = "#{users.map{|u| u.full_name}.join(',')} Work Periods Were Started Successfully."
+    redirect_to action: :work_period_actions
+  end
+
   def work_logs
     @jobs = Job.all.to_a.uniq{|job| job.name}
   end

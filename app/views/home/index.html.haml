@@ -7,6 +7,7 @@
     %h5.text-center.underline Admin Actions
     = link_to 'View Current Work Logs', '/work_logs', {class: 'btn btn-default margin-bottom'}
     = link_to 'Setup Appointments', '/setup_appointments', {class: 'btn btn-default margin-bottom'}
+    = link_to 'Work Period Actions', '/work_period_actions', {class: 'btn btn-default margin-bottom'}
     %h4.text-center View Work Logs For Address
     %form.form.form-horizontal
       .form-group
@@ -20,7 +21,7 @@
 %hr
 - if current_user.work_periods.empty?
   .text-center
-    %h3.text-center You have no work history. Click above to start your work period.
+    %h3.text-center You have no work history.
 - elsif @current_work_period
   %h3.text-center.underline
     Current Work Period
@@ -84,7 +85,7 @@
                                     = fa_icon 'edit 2x', class: 'edit_work_log pointer', value: work_log.id
                                   = fa_icon 'trash-o 2x', class: 'delete_work_log pointer', value: work_log.id
 -else
-  %h3.text-center No current Work Period. Click above to start one.
+  %h3.text-center No Current Work Period.
 -# - if @passed_work_periods_count > 0
 -#   #footer.text-center
 -#     %a{href: '/passed_work_periods', class: 'btn btn-default'}

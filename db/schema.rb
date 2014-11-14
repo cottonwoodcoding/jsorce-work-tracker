@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112223644) do
+ActiveRecord::Schema.define(version: 20141114001632) do
 
   create_table "addresses", force: true do |t|
     t.string   "value"
@@ -57,6 +57,12 @@ ActiveRecord::Schema.define(version: 20141112223644) do
     t.string   "status_notes"
     t.date     "scheduled"
     t.date     "completed"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "passed_work_periods", force: true do |t|
+    t.text     "work_period_ids"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

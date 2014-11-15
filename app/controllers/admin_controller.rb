@@ -14,6 +14,24 @@ class AdminController < ApplicationController
   def passed_work_period
     @passed_work_period = PassedWorkPeriod.find(params[:id])
     @work_periods = WorkPeriod.where(id: @passed_work_period.work_period_ids)
+    @passed_work_period_ids = @work_periods.map{|wp| wp.id}
+    @jobs = Hash.new{|key, value| key[value] = []}
+    Job.where(work_period_id: @passed_work_period_ids).each do |job|
+      next unless job.has_work?
+      job.addresses.each do |address|
+        @jobs[job.name] << {"#{address.value}" => address.id}
+      end
+    end
+    hash = Hash.new{|key, value| key[value] = []}
+    @jobs.each do |key, values|
+      values.each do |key|
+        key.each do |address, id|
+          hash[address] << id
+        end
+      end
+      @jobs[key] = []
+      @jobs[key] << hash
+    end
   end
 
   def end_active_work_periods
@@ -37,7 +55,24 @@ class AdminController < ApplicationController
   end
 
   def work_logs
-    @jobs = Job.all.to_a.uniq{|job| job.name}
+    @jobs = Hash.new{|key, value| key[value] = []}
+    @current_work_period_ids = WorkPeriod.where(active: true).map{|wp| wp.id}
+    Job.where(work_period_id: @current_work_period_ids).each do |job|
+      next unless job.has_work?
+      job.addresses.each do |address|
+        @jobs[job.name] << {"#{address.value}" => address.id}
+      end
+    end
+    hash = Hash.new{|key, value| key[value] = []}
+    @jobs.each do |key, values|
+      values.each do |key|
+        key.each do |address, id|
+          hash[address] << id
+        end
+      end
+      @jobs[key] = []
+      @jobs[key] << hash
+    end
   end
 
   def setup_appointments

@@ -9,6 +9,10 @@
       \-
       = link_to 'Add New Address', "/new_address/#{job.id}"
   .form-group
+    = f.label :date, {class: 'col-sm-2 control-label'}
+    .col-sm-9
+      = f.text_field :date, {class: 'form-control datepicker', "data-date-format" => "mm-dd", value: Time.now.strftime("%m-%d"), required: true}
+  .form-group
     = f.label :work_description, {class: 'col-sm-2 control-label'}
     .col-sm-9
       = f.text_area :work_description, {class: 'form-control', required: true}

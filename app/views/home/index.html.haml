@@ -87,7 +87,7 @@
                                   = fa_icon 'trash-o 2x', class: 'delete_work_log pointer', value: work_log.id
 -else
   %h3.text-center No Current Work Period.
--# - if @passed_work_periods_count > 0
--#   #footer.text-center
--#     %a{href: '/passed_work_periods', class: 'btn btn-default'}
--#       = "View #{pluralize(@passed_work_periods_count, 'Passed Work Period', 'Passed Work Periods')}"
+- if @passed_work_periods_count > 0
+  #footer.text-center
+    %a{href: "passed_work_periods/#{current_user.id}", class: 'btn btn-default'}
+      = "View #{pluralize(@passed_work_periods_count, 'Passed Work Period', 'Passed Work Periods')}"

@@ -17,47 +17,82 @@
             = minutes_in_words(work_period.total_time)
             %br
             %label Total Money Spent This Work Period:
-            = number_to_currency work_period.total_money
+            = number_to_currency(work_period.total_money)
   %hr
   %h3.text-center.underline Work Logs By Job
   .text-center
-    - @jobs = @work_periods.map{|work_period| work_period.jobs}.flatten
     - if @jobs.empty?
       %h5 No Jobs In Work Period
-    - @jobs.each do |job|
-      - next unless job.any_has_work?
-      .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job.id}"}
+    - else
+      - @jobs.each do |job, addresses|
+        .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job}"}
+          .panel.panel-default
+            .panel-heading{:role => "tab"}
+              %h4.panel-title
+                %a{"data-parent" => "#job_accordian_#{job}", "data-toggle" => "collapse", :href => "#job_collapse_#{job}"}
+                  Job Name:
+                  = job
+                  %i.red
+                    .info
+                      = "Total Time On Job: #{minutes_in_words(Job.where(work_period_id: @passed_work_period_ids, name: job).map{|job| job.total_time}.inject(:+))}"
+                    .info
+                      = "Total Money Spent On Job: #{number_to_currency(Job.where(name: job).map{|job| job.total_money}.inject(:+))}"
+            .panel-collapse.collapse.out{:role => "tabpanel", id: "job_collapse_#{job}"}
+              .panel-body
+                - addresses.each do |address|
+                  - address.each do |address, address_ids|
+                    - address = Address.find_by(value: address)
+                    .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "address_accordion_#{address.id}"}
+                      .panel.panel-default
+                        .panel-heading{:role => "tab"}
+                          %h4.panel-title
+                            %a{"data-parent" => "#address_accordion_#{address.id}", "data-toggle" => "collapse", :href => "#address_collapse_#{address.id}"}
+                              Address:
+                              = address.value
+                        .panel-collapse.collapse.out{:role => "tabpanel", id: "address_collapse_#{address.id}"}
+                          .panel-body
+                            - work_logs = Address.where(id: address_ids).map{|address| address.work_logs}.flatten
+                            - work_logs.each do |work_log|
+                              - next unless WorkPeriod.find(work_log.address.job.work_period_id).active
+                              .well
+                                %h4
+                                  = "Work Log By: #{User.find(Address.find(work_log.address_id).created_by).full_name}"
+                                = render(partial: 'shared/work_log_details', locals: {work_log: work_log})
+  %hr
+  %h3.text-center.underline Work Logs By Employee
+  .text-center
+    - @passed_work_period_ids.each do |work_period_id|
+      - work_period = WorkPeriod.find(work_period_id)
+      - user = work_period.user
+      .panel-group{:role => "tablist", id: "accordian_#{user.id}"}
         .panel.panel-default
           .panel-heading{:role => "tab"}
             %h4.panel-title
-              %a{"data-parent" => "#job_accordian_#{job.id}", "data-toggle" => "collapse", :href => "#job_collapse_#{job.id}"}
-                Job Name:
-                = job.name
-                %i.red
-                  .info
-                    = "Total Time On Job: #{minutes_in_words(Job.where(name: job.name).map{|job| job.total_time}.inject(:+))}"
-                  .info
-                    = "Total Money Spent On Job: #{number_to_currency(Job.where(name: job.name).map{|job| job.total_money}.inject(:+))}"
-          .panel-collapse.collapse.out{:role => "tabpanel", id: "job_collapse_#{job.id}"}
+              %a{"data-parent" => "#accordian_#{user.id}", "data-toggle" => "collapse", :href => "#collapse_#{user.id}"}
+                = user.full_name
+          .panel-collapse.collapse.out{:role => "tabpanel", id: "collapse_#{user.id}"}
             .panel-body
-              - job_addresses = Address.joins(:job).where("jobs.name = '#{job.name}'").to_a.uniq{|address| address.value}
-              - job_addresses.each do |address|
-                .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "address_accordion_#{address.id}"}
-                  .panel.panel-default
-                    .panel-heading{:role => "tab"}
-                      %h4.panel-title
-                        %a{"data-parent" => "#address_accordion_#{address.id}", "data-toggle" => "collapse", :href => "#address_collapse_#{address.id}"}
-                          Address:
-                          = address.value
-                    .panel-collapse.collapse.out{:role => "tabpanel", id: "address_collapse_#{address.id}"}
-                      .panel-body
-                        - work_logs = WorkLog.joins(:address).where("addresses.value = '#{address.value}'").order("addresses.created_by").to_a.uniq
-                        - work_logs.each do |work_log|
-                          - next unless WorkPeriod.find(work_log.address.job.work_period_id).active
-                          .well
-                            %h4
-                              = "Work Log By: #{User.find(Address.find(work_log.address_id).created_by).full_name}"
-                            = render(partial: 'shared/work_log_details', locals: {work_log: work_log})
-  %hr
+              - if work_period.jobs?
+                - work_period.jobs.each do |job|
+                  .panel-group{:role => "tablist", id: "user_job_accordian_#{job.id}"}
+                    .panel.panel-default
+                      .panel-heading{:role => "tab"}
+                        %h4.panel-title
+                          %a{"data-parent" => "#user_job_accordian_#{job.id}", "data-toggle" => "collapse", :href => "#user_job_collapse_#{job.id}"}
+                            = job.name
+                      .panel-collapse.collapse.out{:role => "tabpanel", id: "user_job_collapse_#{job.id}"}
+                        .panel-body
+                          - job.addresses.each do |address|
+                            .panel-group{:role => "tablist", id: "user_address_accordian_#{address.id}"}
+                              .panel.panel-default
+                                .panel-heading{:role => "tab"}
+                                  %h4.panel-title
+                                    %a{"data-parent" => "#user_address_accordian_#{address.id}", "data-toggle" => "collapse", :href => "#user_address_collapse_#{address.id}"}
+                                      = address.value
+                                .panel-collapse.collapse.out{:role => "tabpanel", id: "user_address_collapse_#{address.id}"}
+                                  .panel-body
+                                    - address.work_logs.sort_by{|work_log| work_log.updated_at}.each do |work_log|
+                                      .well
+                                        = render(partial: 'shared/work_log_details', locals: {work_log: work_log})
 .text-center
   = link_to 'Back', :back, class: 'btn btn-default'

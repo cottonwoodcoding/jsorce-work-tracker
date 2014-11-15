@@ -3,9 +3,9 @@ class WorkLogController < ApplicationController
 
   def create
     job = Job.find(params[:job_id])
-    address = Address.find_or_create_by(created_by: current_user.id, value: params[:work_log].delete(:address))
+    address = Address.find_or_create_by(job_id: job.id, created_by: current_user.id, value: params[:work_log].delete(:address))
     work_log = WorkLog.new(params[:work_log])
-    work_log.date = Time.now
+    work_log.date = Time.parse(params[:work_log][:date].gsub('-', '/'))
     job.addresses << address
     address.work_logs << work_log
     current_user.current_work_period.jobs << job

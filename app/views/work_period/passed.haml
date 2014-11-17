@@ -17,7 +17,7 @@
             %h5.text-center
               %i.red
                 .info
-                  = "Total Hours Worked This Work Period: #{work_period.total_time}"
+                  = "Total Hours Worked This Work Period: #{minutes_in_words(work_period.total_time)}"
                 .info
                   = "Total Money Spent This Work Period: #{number_to_currency(work_period.total_money)}"
             %h3.text-center

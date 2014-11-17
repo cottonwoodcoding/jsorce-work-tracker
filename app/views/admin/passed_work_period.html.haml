@@ -25,7 +25,7 @@
       %h5 No Jobs In Work Period
     - else
       - @jobs.each do |job_name, addresses|
-        - job = Job.find_by(name: job)
+        - job = Job.find_by(name: job_name)
         .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job.id}"}
           .panel.panel-default
             .panel-heading{:role => "tab"}

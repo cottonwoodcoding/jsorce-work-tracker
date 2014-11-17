@@ -24,7 +24,7 @@
     - if @jobs.empty?
       %h5 No Jobs In Work Period
     - else
-      - @jobs.each do |job, addresses|
+      - @jobs.each do |job_name, addresses|
         - job = Job.find_by(name: job)
         .panel-group{"aria-multiselectable" => "true", :role => "tablist", id: "job_accordian_#{job.id}"}
           .panel.panel-default
@@ -35,9 +35,9 @@
                   = job.name
                   %i.red
                     .info
-                      = "Total Time On Job: #{minutes_in_words(Job.where(work_period_id: @passed_work_period_ids, name: job).map{|job| job.total_time}.inject(:+))}"
+                      = "Total Time On Job: #{minutes_in_words(Job.where(work_period_id: @passed_work_period_ids, name: job_name).map{|job| job.total_time}.inject(:+))}"
                     .info
-                      = "Total Money Spent On Job: #{number_to_currency(Job.where(name: job).map{|job| job.total_money}.inject(:+))}"
+                      = "Total Money Spent On Job: #{number_to_currency(Job.where(name: job_name).map{|job| job.total_money}.inject(:+))}"
             .panel-collapse.collapse.out{:role => "tabpanel", id: "job_collapse_#{job.id}"}
               .panel-body
                 - addresses.each do |address|

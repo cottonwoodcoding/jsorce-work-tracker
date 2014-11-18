@@ -63,8 +63,8 @@ class AdminController < ApplicationController
         @jobs[job.name] << {"#{address.value}" => address.id}
       end
     end
-    hash = Hash.new{|key, value| key[value] = []}
     @jobs.each do |key, values|
+      hash = Hash.new{|key, value| key[value] = []}
       values.each do |key|
         key.each do |address, id|
           hash[address] << id

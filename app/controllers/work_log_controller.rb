@@ -14,7 +14,9 @@ class WorkLogController < ApplicationController
   end
 
   def update
-    WorkLog.find(params[:id]).update_attributes!(params[:work_log])
+    work_log = WorkLog.find(params[:id])
+    work_log.date = Time.parse(params[:work_log][:date].gsub('-', '/'))
+    work_log.update_attributes!(params[:work_log].except(:date))
     flash[:notice] = "Your work has been edited successfully."
     redirect_to controller: :home, action: :index
   end

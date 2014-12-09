@@ -1,5 +1,5 @@
 class AppointmentController < ApplicationController
-  before_action :appointment, only: [:edit, :show, :update, :delete]
+  before_action :appointment, only: [:edit, :show, :update, :delete, :make_open]
 
   def index
     @user = User.find(params[:user_id])
@@ -39,6 +39,13 @@ class AppointmentController < ApplicationController
     @appointment.destroy
     flash[:notice] = "Appointment Removed Successfully"
     redirect_to :back
+  end
+
+  def make_open
+    OpenAppointment.create!(@appointment.attributes.except('id', 'user_id', 'created_at', 'updated_at'))
+    @appointment.destroy!
+    flash[:notice] = "Appointment Changed To Open Appointment Successfully"
+    redirect_to :index
   end
 
   private

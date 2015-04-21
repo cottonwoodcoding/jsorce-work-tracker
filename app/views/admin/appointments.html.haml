@@ -1,0 +1,5 @@
+.text-center
+  = render(partial: 'appointment_accordian', locals: {appointment_groups: @appointment_groups})
+  = will_paginate @appointments
+  %br
+  = link_to 'Back', :index, class: 'btn btn-warning'

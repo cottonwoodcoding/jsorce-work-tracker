@@ -88,6 +88,28 @@ class AdminController < ApplicationController
     @inactive_users = User.inactive
   end
 
+  def appointments
+    @appointments = Appointment.paginate(page: params[:page])
+    @appointment_groups = {}
+    @appointment_groups[:not_scheduled] = @appointments.where(status: 'not scheduled')
+    @appointment_groups[:scheduled] = @appointments.where(status: 'scheduled')
+    @appointment_groups[:open] = @appointments.where(status: 'open')
+    @appointment_groups[:other] = @appointments.where(status: 'other')
+    @appointment_groups[:no_answer] = @appointments.where(status: 'no answer')
+    @appointment_groups[:completed] = @appointments.where(status: 'completed')
+  end
+
+  def open_appointments
+    @appointments = OpenAppointment.paginate(page: params[:page])
+    @appointment_groups = {}
+    @appointment_groups[:not_scheduled] = @appointments.where(status: 'not scheduled')
+    @appointment_groups[:scheduled] = @appointments.where(status: 'scheduled')
+    @appointment_groups[:open] = @appointments.where(status: 'open')
+    @appointment_groups[:other] = @appointments.where(status: 'other')
+    @appointment_groups[:no_answer] = @appointments.where(status: 'no answer')
+    @appointment_groups[:completed] = @appointments.where(status: 'completed')
+  end
+
   def switch_status
     if user = User.find(params[:id])
       if user.current_work_period

@@ -209,6 +209,7 @@ GEM
     webmock (1.20.3)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
+    will_paginate (3.0.7)
 
 PLATFORMS
   ruby
@@ -248,3 +249,4 @@ DEPENDENCIES
   underscore-rails
   unicorn
   webmock
+  will_paginate (~> 3.0.6)

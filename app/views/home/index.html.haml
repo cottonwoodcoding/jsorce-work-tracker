@@ -15,8 +15,17 @@
               = link_to 'View Current Work Logs', '/work_logs'
             %li
               = link_to 'View Passed Work Periods', '/passed_work_periods'
-            %li
-              = link_to 'Setup Appointments', '/setup_appointments'
+            %li.dropdown
+              %a.dropdown-toggle{"aria-expanded" => "false", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                Appointments
+                %span.caret
+              %ul.dropdown-menu{:role => "menu"}
+                %li
+                  = link_to 'Setup Appointments', '/setup_appointments'
+                %li
+                  = link_to 'View Claimed Appointments', '/view_appointments'
+                %li
+                  = link_to 'View Open Appointments', '/view_open_appointments'
             %li
               = link_to 'Work Period Actions', '/work_period_actions'
             %li

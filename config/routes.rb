@@ -22,6 +22,8 @@ Rails.application.routes.draw do
   get '/passed_work_period/:id', to: 'admin#passed_work_period'
   get '/make_open/:appointment_id', to: 'appointment#make_open'
   get '/user_actions', to: 'admin#user_actions'
+  get '/view_appointments', to: 'admin#appointments'
+  get '/view_open_appointments', to: 'admin#open_appointments'
 
   post '/start_work_period', to: 'work_period#start'
   post '/end_work_period', to: 'work_period#end'

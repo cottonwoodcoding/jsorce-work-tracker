@@ -8,7 +8,7 @@ class AdminController < ApplicationController
   end
 
   def passed_work_periods
-    @passed_work_periods = PassedWorkPeriod.order('updated_at ASC').paginate(page: params[:page], per_page: '5')
+    @passed_work_periods = PassedWorkPeriod.order('updated_at DESC').paginate(page: params[:page], per_page: '5')
   end
 
   def passed_work_period

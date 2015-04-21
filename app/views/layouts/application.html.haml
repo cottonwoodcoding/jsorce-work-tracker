@@ -9,6 +9,12 @@
     %link{:href => image_path('favicon.ico'), :rel => 'shortcut icon', :type => 'image/x-icon'}
   %body
     = render :partial => "shared/bflash"
+    - if current_user
+      %strong.pull-right
+        = "Welcome - #{current_user.full_name}"
+        \-
+        = link_to 'Logout', destroy_user_session_path, {method: :delete}
+    .clearfix
     .text-center
       %a{href: '/'}
         = image_tag('jsorce-logo.png', id: 'logo')

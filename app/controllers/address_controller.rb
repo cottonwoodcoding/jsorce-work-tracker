@@ -12,6 +12,6 @@ class AddressController < ApplicationController
     address.save
     job.addresses << address
     flash[:notice] = "Address was created successfully."
-    redirect_to "/add_work/#{job_name}"
+    redirect_to "/add_work/#{URI.encode(job_name)}"
   end
 end

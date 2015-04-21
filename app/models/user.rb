@@ -3,6 +3,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :validatable
   has_many :work_periods
   has_many :appointments
+  before_create :activate
+  validates_inclusion_of :status, :in => %w(active inactive)
 
   def current_work_period
     self.work_periods.where(active: true).first
@@ -18,5 +20,23 @@ class User < ActiveRecord::Base
 
   def admin?
     @admin ||= self.role == 'admin'
+  end
+
+  def activate
+    self.status = 'active'
+    self.save
+  end
+
+  def self.active
+    where(status: 'active')
+  end
+
+  def self.inactive
+    where(status: 'inactive')
+  end
+
+  def switch_status
+    self.status = self.status == 'active' ? 'inactive' : 'active'
+    self.save
   end
 end

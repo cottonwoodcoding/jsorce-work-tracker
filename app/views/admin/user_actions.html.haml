@@ -1,0 +1,18 @@
+.text-center
+  %h3 Active Users
+  - @users.each do |user|
+    %strong
+      = user.full_name
+      \-
+      = link_to 'Make Inactive', "/switch_status/#{user.id}", method: :post
+    %br
+  %h3 Inactive Users
+  - @inactive_users.each do |inactive|
+    %strong
+      = inactive.full_name
+      \-
+      = link_to 'Make Active', "/switch_status/#{inactive.id}", method: :post
+    %br
+%hr
+.text-center
+  = link_to 'Back', :index, class: 'btn btn-warning'

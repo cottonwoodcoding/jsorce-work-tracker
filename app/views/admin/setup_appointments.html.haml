@@ -32,7 +32,7 @@
                     = link_to delete_appointment_path(appointment), {method: :delete} do
                       = fa_icon 'trash-o'
               %h5.underline Scheduled
-              - user.appointments.where(status: 'Scheduled').each do |appointment|
+              - user.appointments.where(status: 'scheduled').each do |appointment|
                 %div
                   %a{href: "/edit_appointment/#{appointment.id}"}
                     = appointment.name

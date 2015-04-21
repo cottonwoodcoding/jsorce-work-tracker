@@ -30,5 +30,5 @@
     = link_to 'Back', :back, {class: 'btn btn-default', role: 'button'}
     = f.submit 'Save Changes', {class: 'btn btn-warning'}
     - if admin?
-      %br
-      = link_to 'Make Open Appointment', "/make_open/#{@appointment.id}", {class: 'btn btn-default', role: 'button'}
+      %hr
+      = link_to 'Make Open Appointment', "/make_open/#{@appointment.id}", {class: 'btn btn-danger', role: 'button'}

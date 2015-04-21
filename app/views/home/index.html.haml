@@ -1,45 +1,65 @@
 .text-center
-  %h3
-    = "Welcome - #{current_user.full_name}"
-    \-
-    = link_to 'Logout', destroy_user_session_path, {method: :delete}
   - if admin?
-    %h5.text-center.underline Admin Actions
-    = link_to 'View Current Work Logs', '/work_logs', {class: 'btn btn-default margin-bottom'}
-    = link_to 'View Passed Work Periods', '/passed_work_periods', {class: 'btn btn-default margin-bottom'}
-    = link_to 'Setup Appointments', '/setup_appointments', {class: 'btn btn-default margin-bottom'}
-    = link_to 'Work Period Actions', '/work_period_actions', {class: 'btn btn-default margin-bottom'}
-    %h4.text-center View Work Logs For Address
-    %form.form.form-horizontal
-      .form-group
-        %label{class: 'col-sm-2 control-label'} Address:
-        .col-sm-9
-          %select#admin_address_select.form-control.selectpicker{'data-live-search' => 'true'}
-            %option{value: 'blank'} --Select Address--
-            - @addresses.each do |address|
-              %option{value: "/work_logs_by_address/#{address.value}"}
-                = address.value
-%hr
+    %nav.navbar.navbar-default
+      .container-fluid
+        .navbar-header
+          %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+            %span.sr-only Toggle navigation
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.navbar-brand{:href => "#"} Admin Actions
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          %ul.nav.navbar-nav
+            %li
+              = link_to 'View Current Work Logs', '/work_logs'
+            %li
+              = link_to 'View Passed Work Periods', '/passed_work_periods'
+            %li
+              = link_to 'Setup Appointments', '/setup_appointments'
+            %li
+              = link_to 'Work Period Actions', '/work_period_actions'
+            %li
+              = link_to 'User Actions', '/user_actions'
 - if current_user.work_periods.empty?
   .text-center
     %h3.text-center You have no work history.
-- elsif @current_work_period
-  %h3.text-center.underline
-    Current Work Period
-  .text-center
-    = link_to 'Manage My Appointments', "/appointments/#{current_user.id}", {class: 'btn btn-default'}
+- elsif @current_work_period && !current_user.admin?
+  %nav.navbar.navbar-default
+    .container-fluid
+      .navbar-header
+        %button.navbar-toggle.collapsed{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.navbar-brand{:href => "#"} Work Period Actions
+      #bs-example-navbar-collapse-1.collapse.navbar-collapse
+        %ul.nav.navbar-nav
+          %li
+            = link_to 'Manage My Appointments', "/appointments/#{current_user.id}"
+  %form.form.form-horizontal
+    .form-group
+      %label{class: 'col-sm-2 control-label'} Work Logs For Address:
+      .col-sm-9
+        %select#admin_address_select.form-control.selectpicker{'data-live-search' => 'true'}
+          %option{value: 'blank'} -- Select Address
+          - @addresses.each do |address|
+            %option{value: "/work_logs_by_address/#{address.value}"}
+              = address.value
+  %hr
   %h5.text-center
-    %i
-      = "Work Period Started: #{@current_work_period.date_started.strftime('%m/%d/%y')}"
-  %h5.text-center
-    %i.red
+    = "Work Period Started: #{@current_work_period.date_started.strftime('%m/%d/%y')}"
+  .lead.text-center
+    .red
       .info
-        = "Total Time Worked This Work Period: #{minutes_in_words(@current_work_period.total_time)}"
+        = "Total Time Worked: #{minutes_in_words(@current_work_period.total_time)}"
       .info
-        = "Total Money Spent This Work Period: #{number_to_currency(@current_work_period.total_money)}"
+        = "Total Money Spent: #{number_to_currency(@current_work_period.total_money)}"
+  %hr
   .container-fluid.text-center
     .row
-      %h3
+      %h4
         %label Select A Job To Add Work To:
         %select#job_select.selectpicker{'data-live-search' => 'true'}
           %option{value: 'blank'} Select A Job
@@ -48,7 +68,6 @@
               = job.name
           %option{value: '/new_job'}
             Add A Job
-      %hr
       - @work_period_jobs.each do |job|
         - next unless job.has_work?
         .panel-group{id: "accordion-#{job.id}"}

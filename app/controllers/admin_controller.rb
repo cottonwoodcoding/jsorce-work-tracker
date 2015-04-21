@@ -84,9 +84,27 @@ class AdminController < ApplicationController
     @work_logs = WorkLog.joins(:address).where('TRIM(addresses.value) = ?', @address_name).order("addresses.created_by")
   end
 
+  def user_actions
+    @inactive_users = User.inactive
+  end
+
+  def switch_status
+    if user = User.find(params[:id])
+      if user.current_work_period
+        flash[:alert] = 'Cannot Inactivate a user with an active work period.'
+      else
+        user.switch_status
+        flash[:notice] =  "#{user.full_name} Status Changed."
+      end
+    else
+      flash[:alert] = "Could not find that user."
+    end
+    redirect_to :back
+  end
+
   private
 
   def users
-    @users = User.all.sort_by{|user| user.full_name}
+    @users = User.active.sort_by{|user| user.full_name}
   end
 end

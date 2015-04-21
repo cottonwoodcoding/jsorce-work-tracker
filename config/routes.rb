@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   get '/passed_work_periods', to: 'admin#passed_work_periods'
   get '/passed_work_period/:id', to: 'admin#passed_work_period'
   get '/make_open/:appointment_id', to: 'appointment#make_open'
+  get '/user_actions', to: 'admin#user_actions'
 
   post '/start_work_period', to: 'work_period#start'
   post '/end_work_period', to: 'work_period#end'
@@ -33,6 +34,7 @@ Rails.application.routes.draw do
   post '/create_open_appointment', to: 'open_appointment#create'
   post '/end_active_work_periods/:ids', to: 'admin#end_active_work_periods'
   post '/start_work_periods', to: 'admin#start_work_periods'
+  post '/switch_status/:id', to: 'admin#switch_status'
 
   delete '/delete_open_appointment/:appointment_id', to: 'open_appointment#delete', as: :delete_open_appointment
   delete '/delete_appointment/:appointment_id', to: 'appointment#delete', as: :delete_appointment

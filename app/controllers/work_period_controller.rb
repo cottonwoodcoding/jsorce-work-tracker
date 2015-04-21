@@ -21,6 +21,6 @@ class WorkPeriodController < ApplicationController
   end
 
   def passed
-    @passed = current_user.work_periods.where(active: false)
+    @passed = current_user.work_periods.where(active: false).paginate(:page => params[:page], per_page: '5')
   end
 end

@@ -1,17 +1,22 @@
-%h3.underline
-  = "#{@appointments.size} out of #{@appointments.total_entries} Appointments showing"
-- appointment_groups.each do |name, appointments|
-  .panel-group{id: name}
-    .panel.panel-default
-      .panel-heading{:role => "tab"}
-        %h4.panel-title
-          %a{"data-parent" => name, "data-toggle" => "collapse", :href => "##{name}_collapse"}
-            = "#{pluralize(appointments.size, "#{name.to_s.humanize.titleize} Appointment", "#{name.to_s.humanize.titleize} Appointments")}"
-      .panel-collapse.collapse.out{id: "#{name}_collapse"}
-        .panel-body
-          - appointments.each do |appointment|
-            %strong
-              = appointment.name.titleize
-              - if appointment.respond_to?(:user_id) && appointment.user_id
-                = "- claimed by: #{User.find(appointment.user_id).full_name}"
-              %br
+- if @appointments.count > 0
+  - text = @appointments.first.class == OpenAppointment ? 'Open Appointment' : 'Claimed Appointment'
+  %h3.underline
+    = pluralize(@appointments.count, text)
+  - appointment_groups.each do |name, appointments|
+    .panel-group{id: name}
+      .panel.panel-default
+        .panel-heading{:role => "tab"}
+          %h4.panel-title
+            %a{"data-parent" => name, "data-toggle" => "collapse", :href => "##{name}_collapse"}
+              = "#{pluralize(appointments.count, "#{name.to_s.humanize.titleize} Appointment", "#{name.to_s.humanize.titleize} Appointments")}"
+        .panel-collapse.collapse.out{id: "#{name}_collapse"}
+          .panel-body
+            - appointments.each do |appointment|
+              %strong
+                = appointment.name.titleize
+                - if appointment.respond_to?(:user_id) && appointment.user_id
+                  = "- claimed by: #{User.find(appointment.user_id).full_name}"
+                %br
+- else
+  %h3 No appointments to show
+

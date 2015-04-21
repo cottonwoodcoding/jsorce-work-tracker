@@ -1,4 +1,5 @@
 class AdminController < ApplicationController
+  require 'will_paginate/array'
   before_filter :users
 
   def work_period_actions
@@ -7,8 +8,7 @@ class AdminController < ApplicationController
   end
 
   def passed_work_periods
-    #TODO: should probably paginate this at some point
-    @passed_work_periods = PassedWorkPeriod.all.sort_by{|work_period| work_period.updated_at}
+    @passed_work_periods = PassedWorkPeriod.order('updated_at').paginate(page: params[:page], per_page: '5')
   end
 
   def passed_work_period
@@ -89,7 +89,7 @@ class AdminController < ApplicationController
   end
 
   def appointments
-    @appointments = Appointment.paginate(page: params[:page])
+    @appointments = Appointment.all
     @appointment_groups = {}
     @appointment_groups[:not_scheduled] = @appointments.where(status: 'not scheduled')
     @appointment_groups[:scheduled] = @appointments.where(status: 'scheduled')
@@ -100,7 +100,7 @@ class AdminController < ApplicationController
   end
 
   def open_appointments
-    @appointments = OpenAppointment.paginate(page: params[:page])
+    @appointments = OpenAppointment.all
     @appointment_groups = {}
     @appointment_groups[:not_scheduled] = @appointments.where(status: 'not scheduled')
     @appointment_groups[:scheduled] = @appointments.where(status: 'scheduled')

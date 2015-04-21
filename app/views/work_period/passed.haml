@@ -56,4 +56,6 @@
                                 .well
                                   = render(partial: 'shared/work_log_details', locals: {work_log: work_log})
   #footer.text-center
+    = will_paginate @passed
+    %br
     = link_to 'Back', :back, {class: 'btn btn-default'}

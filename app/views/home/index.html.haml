@@ -30,6 +30,8 @@
               = link_to 'Work Period Actions', '/work_period_actions'
             %li
               = link_to 'User Actions', '/user_actions'
+            %li
+              = link_to 'Work Notes', notes_path
 - if current_user.work_periods.empty?
   .text-center
     %h3.text-center You have no work history.
@@ -48,6 +50,8 @@
           %ul.nav.navbar-nav
             %li
               = link_to 'Manage My Appointments', "/appointments/#{current_user.id}"
+            %li
+              = link_to 'Work Notes', notes_path
   - else
     %form.form.form-horizontal
       .form-group

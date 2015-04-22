@@ -45,4 +45,6 @@ Rails.application.routes.draw do
   patch '/update_appointment/:appointment_id', to: 'appointment#update'
   patch '/update_open_appointment/:appointment_id', to: 'open_appointment#update'
   patch '/claim_appointment/:appointment_id', to: 'open_appointment#claim'
+
+  resources :notes
 end

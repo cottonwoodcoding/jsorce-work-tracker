@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150421050838) do
+ActiveRecord::Schema.define(version: 20150421233830) do
 
   create_table "addresses", force: true do |t|
     t.string   "value"
@@ -47,6 +47,13 @@ ActiveRecord::Schema.define(version: 20150421050838) do
 
   add_index "jobs", ["created_by"], name: "index_jobs_on_created_by"
   add_index "jobs", ["name"], name: "index_jobs_on_name"
+
+  create_table "notes", force: true do |t|
+    t.string   "title"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "open_appointments", force: true do |t|
     t.string   "name"

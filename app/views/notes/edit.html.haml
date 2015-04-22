@@ -1,0 +1,13 @@
+%h3.text-center.underline New Note
+= form_for @note, html: {class: 'form-horizontal'} do |f|
+  .form-group
+    %label.col-sm-2.control-label Title
+    .col-sm-9
+      = f.text_field :title, class: 'form-control'
+  .form-group
+    %label.col-sm-2.control-label Description
+    .col-sm-9
+      = f.text_area :description, class: 'form-control'
+  .form-group
+    .col-sm-offset-2.col-sm-9
+      = f.submit class: 'btn btn-warning'

@@ -1,0 +1,20 @@
+.text-center
+  %h3.underline Work Notes
+  - if @notes.any?
+    - @notes.each do |note|
+      = link_to note_path(note) do
+        %h4
+          = note.title
+          \-
+          = link_to edit_note_path(note) do
+            = fa_icon 'pencil'
+          = link_to note_path(note), method: :delete, data: {confirm: 'Really delete this note?'} do
+            = fa_icon 'trash'
+      %br
+  - else
+    %p No Work Notes To Show.
+  %hr
+  = will_paginate @notes
+  %br
+  = link_to 'Back', :index, class: 'btn btn-default'
+  = link_to 'New Note', new_note_path, class: 'btn btn-warning'

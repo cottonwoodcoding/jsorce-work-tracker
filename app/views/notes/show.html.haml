@@ -1,0 +1,7 @@
+.text-center
+  %h3
+    = @note.title
+  %p
+    = @note.description
+  %hr
+  = link_to 'Back', notes_path, class: 'btn btn-default'

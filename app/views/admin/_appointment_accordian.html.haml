@@ -13,7 +13,10 @@
           .panel-body
             - appointments.each do |appointment|
               %strong
-                = appointment.name.titleize
+                - if appointment.class.to_s == 'OpenAppointment'
+                  = link_to appointment.name.titleize, "/open_appointment/#{appointment.id}"
+                - else
+                  = link_to appointment.name.titleize, "/appointment/#{appointment.id}"
                 - if appointment.respond_to?(:user_id) && appointment.user_id
                   = "- claimed by: #{User.find(appointment.user_id).full_name}"
                 %br

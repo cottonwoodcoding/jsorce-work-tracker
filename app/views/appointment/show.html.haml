@@ -1,0 +1,27 @@
+= form_for @appointment, url: "/claim_appointment/#{@appointment.id}'", html: {class: 'form form-horizontal'} do |f|
+  .form-group
+    = f.label :name, {class: 'control-label col-sm-2'}
+    .col-sm-9
+      = f.text_field :name, {class: 'form-control', readonly: true}
+  .form-group
+    = f.label :number, {class: 'control-label col-sm-2'}
+    .col-sm-9
+      = f.phone_field :number, {class: 'form-control', readonly: true}
+  .form-group
+    = f.label :address, {class: 'control-label col-sm-2'}
+    .col-sm-9
+      = f.text_field :address, {class: 'form-control', readonly: true}
+  .form-group
+    = f.label :notes, {class: 'control-label col-sm-2'}
+    .col-sm-9
+      = f.text_area :notes, {class: 'form-control', readonly: true}
+  .form-group
+    = f.label :status, {class: 'control-label col-sm-2'}
+    .col-sm-9
+      = f.select :status, ['not scheduled', 'scheduled', 'no answer', 'completed', 'other'], {}, {class: 'selectpicker', 'data-live-search' => 'true'}
+  .form-group
+    = f.label :status_notes, {class: 'control-label col-sm-2'}
+    .col-sm-9
+      = f.text_area :status_notes, {class: 'form-control'}
+  .actions.text-center
+    = link_to 'Back', :back, {class: 'btn btn-default', role: 'button'}

@@ -24,7 +24,11 @@ class OpenAppointmentController < ApplicationController
     rescue => e
       flash[:notice] = "Appointment Not Updated - #{appointment.errors.full_massages.join(',')}"
     end
-    redirect_to setup_appointments_path
+    if params[:goBack]
+      redirect_to '/view_open_appointments'
+    else
+      redirect_to setup_appointments_path
+    end
   end
 
   def delete

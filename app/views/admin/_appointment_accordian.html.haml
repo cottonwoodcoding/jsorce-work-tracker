@@ -14,9 +14,9 @@
             - appointments.each do |appointment|
               %strong
                 - if appointment.class.to_s == 'OpenAppointment'
-                  = link_to appointment.name.titleize, "/edit_open_appointment/#{appointment.id}"
+                  = link_to appointment.name.titleize, "/edit_open_appointment/#{appointment.id}?goBack=true"
                 - else
-                  = link_to appointment.name.titleize, "/edit_appointment/#{appointment.id}"
+                  = link_to appointment.name.titleize, "/edit_appointment/#{appointment.id}?goBack=true"
                 - if appointment.respond_to?(:user_id) && appointment.user_id
                   = "- claimed by: #{User.find(appointment.user_id).full_name}"
                 %br

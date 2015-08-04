@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :validatable
   has_many :work_periods
   has_many :appointments
-  before_create :activate
+  before_validation :activate
   validates_inclusion_of :status, :in => %w(active inactive)
 
   def current_work_period
@@ -24,7 +24,6 @@ class User < ActiveRecord::Base
 
   def activate
     self.status = 'active'
-    self.save
   end
 
   def self.active

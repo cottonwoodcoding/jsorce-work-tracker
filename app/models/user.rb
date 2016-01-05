@@ -1,9 +1,9 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :password, :password_confirmation, :first_name, :last_name, :role
+  attr_accessible :email, :password, :password_confirmation, :first_name, :last_name, :role, :status
   devise :database_authenticatable, :registerable, :validatable
   has_many :work_periods
   has_many :appointments
-  before_validation :activate
+  after_create :activate
   validates_inclusion_of :status, :in => %w(active inactive)
 
   def current_work_period
@@ -35,7 +35,7 @@ class User < ActiveRecord::Base
   end
 
   def switch_status
-    self.status = self.status == 'active' ? 'inactive' : 'active'
-    self.save
+    status = self.status == 'active' ? 'inactive' : 'active'
+    self.update(status: status)
   end
 end

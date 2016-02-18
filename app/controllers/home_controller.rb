@@ -12,7 +12,7 @@ class HomeController < ApplicationController
   private
 
   def jobs
-    @jobs ||= Job.all.to_a.uniq{|job| job.name}
+    @jobs ||= Job.all.to_a.uniq{|job| job.name.strip.downcase}
   end
 
 end

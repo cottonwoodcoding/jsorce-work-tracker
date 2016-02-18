@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   root 'home#index', as: :index
   get '/home', to: 'home#index'
   get '/work_logs', to: 'admin#work_logs'
-  get '/add_work/:job_name', to: 'work_period#add_work', :constraints => {:job_name => /[\w.]+?/}
+  get '/add_work/:job_name', to: 'work_period#add_work', :constraints => {:job_name => /.*/}
   get '/new_job', to: 'job#new'
   get '/new_address/:job_id', to: 'address#new'
   get '/passed_work_periods/:id', to: 'work_period#passed'
